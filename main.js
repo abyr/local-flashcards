@@ -10,7 +10,7 @@ import { createCardsModule } from './modules/cards.js';
 import { createStudyModule } from './modules/study.js';
 import { createNotifier, downloadJson } from './modules/ui.js';
 
-const VALID_MODES = new Set(['main', 'library', 'cards']);
+const VALID_MODES = new Set(['progress', 'library', 'cards', 'help']);
 
 const state = {
   activeMode: getRouteMode(),
@@ -30,15 +30,16 @@ document.querySelector('#app').innerHTML = `
         </p>
       </div>
       <nav class="mode-switcher" aria-label="Main navigation">
-        <a class="nav-pill" href="#/main" data-mode="main">Main</a>
-        <a class="nav-pill" href="#/library" data-mode="library">Library</a>
         <a class="nav-pill" href="#/cards" data-mode="cards">Cards</a>
+        <a class="nav-pill" href="#/library" data-mode="library">Library</a>
+        <a class="nav-pill" href="#/progress" data-mode="progress">Progress</a>
+        <a class="nav-pill" href="#/help" data-mode="help">Help</a>
       </nav>
       <div class="top-stats" data-role="top-stats"></div>
     </header>
 
     <main>
-      <section class="mode-grid mode-grid-main-tools" data-mode-panel="main">
+      <section class="mode-grid mode-grid-main-tools" data-mode-panel="progress">
         <section class="panel">
           <div class="panel-header">
             <div>
@@ -84,13 +85,128 @@ document.querySelector('#app').innerHTML = `
         <section class="mode-grid mode-grid-library" data-role="library-cards"></section>
       </section>
       <section class="mode-grid" data-mode-panel="cards" hidden></section>
+      <section class="mode-stack" data-mode-panel="help" hidden>
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Help</p>
+              <h2>How to use this app</h2>
+            </div>
+          </div>
+          <div class="stack-sm">
+            <p class="panel-copy">
+              Local Flashcards keeps your study data in this browser on this device. You can create decks,
+              add cards, study one card at a time, and track your learning progress.
+            </p>
+            <div class="empty-state">
+              <h3>Start here</h3>
+              <p>Open Library to create a deck and add cards. Then open Cards to begin studying.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="mode-grid mode-grid-main-tools">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Common Tasks</p>
+                <h2>What each page does</h2>
+              </div>
+            </div>
+            <div class="stack-sm">
+              <div class="empty-state">
+                <h3>Cards</h3>
+                <p>Review one card at a time. Flip the card, then mark it Hard or Easy.</p>
+              </div>
+              <div class="empty-state">
+                <h3>Library</h3>
+                <p>Create decks, add new cards, edit existing cards, and import or export backups.</p>
+              </div>
+              <div class="empty-state">
+                <h3>Progress</h3>
+                <p>See totals for decks, cards, due items, learned cards, and reviewed today. You can also reset study progress here.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Your Data</p>
+                <h2>Keep your cards safe</h2>
+              </div>
+            </div>
+            <div class="stack-sm">
+              <div class="empty-state">
+                <h3>Export regularly</h3>
+                <p>Use Export JSON in Library to save a backup file, especially before changing browsers or devices.</p>
+              </div>
+              <div class="empty-state">
+                <h3>Data stays local</h3>
+                <p>Your decks and review history stay in this browser. Clearing browser storage may remove your saved data.</p>
+              </div>
+              <div class="empty-state">
+                <h3>Move to another device</h3>
+                <p>Export your data on the old device, then import the JSON file on the new device.</p>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section class="mode-grid mode-grid-main-tools">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Troubleshooting</p>
+                <h2>If something looks wrong</h2>
+              </div>
+            </div>
+            <div class="stack-sm">
+              <div class="empty-state">
+                <h3>Cards or decks are missing</h3>
+                <p>Check whether you are using the same browser and device as before. If you have a backup file, import it from Library.</p>
+              </div>
+              <div class="empty-state">
+                <h3>Buttons do not respond</h3>
+                <p>Refresh the page and try again. If the issue continues, close the tab and reopen the app.</p>
+              </div>
+              <div class="empty-state">
+                <h3>Unexpected study schedule</h3>
+                <p>Hard brings cards back sooner. Easy moves them further into the future. Progress shows how many are due right now.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Support</p>
+                <h2>What to share when asking for help</h2>
+              </div>
+            </div>
+            <div class="stack-sm">
+              <p class="panel-copy">
+                If you contact the person or team who gave you this app, include:
+              </p>
+              <div class="empty-state">
+                <h3>Useful details</h3>
+                <p>What you were trying to do, what happened instead, your browser name, your device type, and whether the problem happens every time.</p>
+              </div>
+              <div class="empty-state">
+                <h3>Before you reset anything</h3>
+                <p>Export a backup first if possible. Reset study progress cannot restore previous review history.</p>
+              </div>
+            </div>
+          </section>
+        </section>
+      </section>
     </main>
 
     <div class="toast-stack" data-role="toast-stack" aria-live="polite"></div>
   </div>
 `;
 
-const mainRoot = document.querySelector('[data-mode-panel="main"]');
+const progressRoot = document.querySelector('[data-mode-panel="progress"]');
 const libraryPageRoot = document.querySelector('[data-mode-panel="library"]');
 const libraryRoot = document.querySelector('[data-role="library-cards"]');
 const studyRoot = document.querySelector('[data-mode-panel="cards"]');
@@ -149,7 +265,7 @@ libraryPageRoot.querySelector('[data-role="import-file"]').addEventListener('cha
   }
 });
 
-mainRoot.querySelector('[data-role="reset-progress"]').addEventListener('click', async () => {
+progressRoot.querySelector('[data-role="reset-progress"]').addEventListener('click', async () => {
   const confirmed = window.confirm('Reset spaced repetition progress for all cards?');
 
   if (!confirmed) {
@@ -175,7 +291,7 @@ function syncVisibleMode() {
 
 function getRouteMode() {
   const route = window.location.hash.replace(/^#\/?/, '');
-  return VALID_MODES.has(route) ? route : 'main';
+  return VALID_MODES.has(route) ? route : 'progress';
 }
 
 function navigate(mode) {
@@ -301,7 +417,7 @@ async function registerServiceWorker() {
 }
 
 if (!window.location.hash || !VALID_MODES.has(window.location.hash.replace(/^#\/?/, ''))) {
-  window.location.hash = '#/main';
+  window.location.hash = '#/progress';
 }
 
 syncVisibleMode();

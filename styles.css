@@ -194,6 +194,12 @@ main {
   grid-template-columns: minmax(320px, 0.95fr) minmax(420px, 1.35fr);
 }
 
+.library-column {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
 .mode-grid-library .panel-list {
   width: 100%;
   justify-self: stretch;

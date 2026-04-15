@@ -381,7 +381,7 @@ export async function importData(rawText) {
       const front = sanitizeText(card?.front);
       const back = sanitizeText(card?.back);
 
-      if (!front || !back) {
+      if (!front || !back || front === back) {
         continue;
       }
 

@@ -21,49 +21,51 @@ export function createCardsModule({
   let deckSummaries = [];
 
   root.innerHTML = `
-    <section class="panel panel-decks">
-      <div class="panel-header">
-        <div>
-          <p class="eyebrow">Decks</p>
-          <h2>Organize your decks</h2>
+    <div class="library-column">
+      <section class="panel panel-decks">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Decks</p>
+            <h2>Organize your decks</h2>
+          </div>
         </div>
-      </div>
-      <form class="stack-sm" data-role="deck-form">
-        <label class="field">
-          <span>New deck name</span>
-          <input name="name" type="text" maxlength="60" placeholder="Spanish Basics" required />
-        </label>
-        <button class="btn btn-primary" type="submit">Add deck</button>
-      </form>
-      <div class="deck-list" data-role="deck-list"></div>
-    </section>
+        <form class="stack-sm" data-role="deck-form">
+          <label class="field">
+            <span>New deck name</span>
+            <input name="name" type="text" maxlength="60" placeholder="Spanish Basics" required />
+          </label>
+          <button class="btn btn-primary" type="submit">Add deck</button>
+        </form>
+        <div class="deck-list" data-role="deck-list"></div>
+      </section>
 
-    <section class="panel panel-editor">
-      <div class="panel-header">
-        <div>
-          <p class="eyebrow">Cards</p>
-          <h2 data-role="editor-title">Create a new card</h2>
+      <section class="panel panel-editor">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Cards</p>
+            <h2 data-role="editor-title">Create a new card</h2>
+          </div>
         </div>
-      </div>
-      <form class="stack-md" data-role="card-form">
-        <label class="field">
-          <span>Deck</span>
-          <select name="deckId" data-role="deck-select" required></select>
-        </label>
-        <label class="field">
-          <span>Front</span>
-          <input name="front" type="text" maxlength="140" placeholder="Bonjour" required />
-        </label>
-        <label class="field">
-          <span>Back</span>
-          <textarea name="back" rows="4" maxlength="500" placeholder="Hello" required></textarea>
-        </label>
-        <div class="actions-row">
-          <button class="btn btn-primary" type="submit" data-role="save-card">Save card</button>
-          <button class="btn btn-muted" type="button" data-role="cancel-edit" hidden>Cancel edit</button>
-        </div>
-      </form>
-    </section>
+        <form class="stack-md" data-role="card-form">
+          <label class="field">
+            <span>Deck</span>
+            <select name="deckId" data-role="deck-select" required></select>
+          </label>
+          <label class="field">
+            <span>Front</span>
+            <input name="front" type="text" maxlength="140" placeholder="Bonjour" required />
+          </label>
+          <label class="field">
+            <span>Back</span>
+            <textarea name="back" rows="4" maxlength="500" placeholder="Hello" required></textarea>
+          </label>
+          <div class="actions-row">
+            <button class="btn btn-primary" type="submit" data-role="save-card">Save card</button>
+            <button class="btn btn-muted" type="button" data-role="cancel-edit" hidden>Cancel edit</button>
+          </div>
+        </form>
+      </section>
+    </div>
 
     <section class="panel panel-list">
       <div class="panel-header">
