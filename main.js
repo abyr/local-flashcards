@@ -173,6 +173,16 @@
         <section class="panel">
           <div class="panel-header">
             <div>
+              <p class="eyebrow">Overview</p>
+              <h2>Study statistics</h2>
+            </div>
+          </div>
+          <div class="stats-grid" data-role="data-stats"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
               <p class="eyebrow">Maintenance</p>
               <h2>Reset study progress</h2>
             </div>
@@ -181,16 +191,6 @@
             This keeps your decks and card text intact but clears repetitions, review dates, and scheduling.
           </p>
           <button class="btn btn-danger" type="button" data-role="reset-progress">Reset progress</button>
-        </section>
-
-        <section class="panel">
-          <div class="panel-header">
-            <div>
-              <p class="eyebrow">Overview</p>
-              <h2>Study statistics</h2>
-            </div>
-          </div>
-          <div class="stats-grid" data-role="data-stats"></div>
         </section>
       </section>
       <section class="mode-stack" data-mode-panel="library" hidden>
@@ -334,7 +334,7 @@
 
     <div class="toast-stack" data-role="toast-stack" aria-live="polite"></div>
   </div>
-`;const no=document.querySelector('[data-mode-panel="progress"]'),Wr=document.querySelector('[data-mode-panel="library"]'),ro=document.querySelector('[data-role="library-cards"]'),ao=document.querySelector('[data-mode-panel="cards"]'),oo=document.querySelector('[data-role="top-stats"]'),io=document.querySelector('[data-role="data-stats"]'),so=document.querySelector('[data-role="toast-stack"]'),vt=Xa(so),Yr=eo({root:ro,getSelectedDeckId:()=>De.selectedDeckId,setSelectedDeckId:g=>{De.selectedDeckId=String(g)},notify:vt,navigate:uo,onDataChange:Xr}),bt=to({root:ao,getSelectedDeckId:()=>De.selectedDeckId,setSelectedDeckId:g=>{De.selectedDeckId=String(g)},isActive:()=>De.activeMode==="cards",notify:vt,onDataChange:Xr});window.addEventListener("hashchange",Gr);Wr.querySelector('[data-role="export-data"]').addEventListener("click",async()=>{const g=await Ya(),A=new Date().toISOString().slice(0,10);Ja(`local-flashcards-${A}.json`,g),vt("Data exported.")});Wr.querySelector('[data-role="import-file"]').addEventListener("change",async g=>{const[A]=g.target.files??[];if(A)try{const I=await A.text();await Qa(I),g.target.value="",vt("Import completed."),await Xn({refreshCards:!0,refreshStudy:!0})}catch(I){vt(I.message,"error")}});no.querySelector('[data-role="reset-progress"]').addEventListener("click",async()=>{window.confirm("Reset spaced repetition progress for all cards?")&&(await Wa({deckId:"all"}),vt("Study progress reset."),await Xn({refreshCards:!0,refreshStudy:!0}))});function Jn(){document.querySelectorAll("[data-mode]").forEach(g=>{g.classList.toggle("nav-pill-active",g.dataset.mode===De.activeMode)}),document.querySelectorAll("[data-mode-panel]").forEach(g=>{const A=g.dataset.modePanel===De.activeMode;g.hidden=!A,g.style.display=A?"":"none"})}function Qr(){const g=window.location.hash.replace(/^#\/?/,"");return zr.has(g)?g:"progress"}function uo(g){const A=`#/${g}`;if(window.location.hash===A){De.activeMode=g,Jn();return}window.location.hash=A}async function Gr(){De.activeMode=Qr(),Jn(),De.activeMode==="cards"&&(await bt.reload(),await bt.render())}async function Jr(){const g=await Hr(),A=[["Decks",g.deckCount],["Cards",g.cardCount],["Due",g.dueCount],["Learned",g.learnedCount]];oo.innerHTML=A.map(([I,k])=>`
+`;const no=document.querySelector('[data-mode-panel="progress"]'),Wr=document.querySelector('[data-mode-panel="library"]'),ro=document.querySelector('[data-role="library-cards"]'),ao=document.querySelector('[data-mode-panel="cards"]'),oo=document.querySelector('[data-role="top-stats"]'),io=document.querySelector('[data-role="data-stats"]'),so=document.querySelector('[data-role="toast-stack"]'),vt=Xa(so),Yr=eo({root:ro,getSelectedDeckId:()=>De.selectedDeckId,setSelectedDeckId:g=>{De.selectedDeckId=String(g)},notify:vt,navigate:uo,onDataChange:Xr}),bt=to({root:ao,getSelectedDeckId:()=>De.selectedDeckId,setSelectedDeckId:g=>{De.selectedDeckId=String(g)},isActive:()=>De.activeMode==="cards",notify:vt,onDataChange:Xr});window.addEventListener("hashchange",Gr);Wr.querySelector('[data-role="export-data"]').addEventListener("click",async()=>{const g=await Ya(),A=new Date().toISOString().slice(0,10);Ja(`local-flashcards-${A}.json`,g),vt("Data exported.")});Wr.querySelector('[data-role="import-file"]').addEventListener("change",async g=>{const[A]=g.target.files??[];if(A)try{const I=await A.text();await Qa(I),g.target.value="",vt("Import completed."),await Xn({refreshCards:!0,refreshStudy:!0})}catch(I){vt(I.message,"error")}});no.querySelector('[data-role="reset-progress"]').addEventListener("click",async()=>{window.confirm("Reset spaced repetition progress for all cards?")&&(await Wa({deckId:"all"}),vt("Study progress reset."),await Xn({refreshCards:!0,refreshStudy:!0}))});function Jn(){document.querySelectorAll("[data-mode]").forEach(g=>{g.classList.toggle("nav-pill-active",g.dataset.mode===De.activeMode)}),document.querySelectorAll("[data-mode-panel]").forEach(g=>{const A=g.dataset.modePanel===De.activeMode;g.hidden=!A,g.style.display=A?"":"none"})}function Qr(){const g=window.location.hash.replace(/^#\/?/,"");return zr.has(g)?g:"cards"}function uo(g){const A=`#/${g}`;if(window.location.hash===A){De.activeMode=g,Jn();return}window.location.hash=A}async function Gr(){De.activeMode=Qr(),Jn(),De.activeMode==="cards"&&(await bt.reload(),await bt.render())}async function Jr(){const g=await Hr(),A=[["Decks",g.deckCount],["Cards",g.cardCount],["Due",g.dueCount],["Learned",g.learnedCount]];oo.innerHTML=A.map(([I,k])=>`
         <article class="top-stat">
           <strong>${k}</strong>
           <span>${I}</span>
@@ -344,5 +344,5 @@
           <strong>${k}</strong>
           <span>${I}</span>
         </article>
-      `).join("")}async function Xr({refreshCards:g=!1,refreshStudy:A=!1}={}){await Jr(),g&&await Yr.render(),A&&(await bt.reload(),await bt.render())}async function Xn({refreshCards:g=!0,refreshStudy:A=!0}={}){await Jr(),g&&await Yr.render(),A&&(await bt.reload(),await bt.render())}async function co(){if("serviceWorker"in navigator)try{await navigator.serviceWorker.register("/local-flashcards/sw.js")}catch(g){console.error("Service worker registration failed:",g)}}(!window.location.hash||!zr.has(window.location.hash.replace(/^#\/?/,"")))&&(window.location.hash="#/progress");Jn();await Xn();await Gr();await co();
+      `).join("")}async function Xr({refreshCards:g=!1,refreshStudy:A=!1}={}){await Jr(),g&&await Yr.render(),A&&(await bt.reload(),await bt.render())}async function Xn({refreshCards:g=!0,refreshStudy:A=!0}={}){await Jr(),g&&await Yr.render(),A&&(await bt.reload(),await bt.render())}async function co(){if("serviceWorker"in navigator)try{await navigator.serviceWorker.register("/local-flashcards/sw.js")}catch(g){console.error("Service worker registration failed:",g)}}(!window.location.hash||!zr.has(window.location.hash.replace(/^#\/?/,"")))&&(window.location.hash="#/cards");Jn();await Xn();await Gr();await co();
 //# sourceMappingURL=main.js.map
