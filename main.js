@@ -43,6 +43,16 @@ document.querySelector('#app').innerHTML = `
         <section class="panel">
           <div class="panel-header">
             <div>
+              <p class="eyebrow">Overview</p>
+              <h2>Study statistics</h2>
+            </div>
+          </div>
+          <div class="stats-grid" data-role="data-stats"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
               <p class="eyebrow">Maintenance</p>
               <h2>Reset study progress</h2>
             </div>
@@ -51,16 +61,6 @@ document.querySelector('#app').innerHTML = `
             This keeps your decks and card text intact but clears repetitions, review dates, and scheduling.
           </p>
           <button class="btn btn-danger" type="button" data-role="reset-progress">Reset progress</button>
-        </section>
-
-        <section class="panel">
-          <div class="panel-header">
-            <div>
-              <p class="eyebrow">Overview</p>
-              <h2>Study statistics</h2>
-            </div>
-          </div>
-          <div class="stats-grid" data-role="data-stats"></div>
         </section>
       </section>
       <section class="mode-stack" data-mode-panel="library" hidden>
@@ -291,7 +291,7 @@ function syncVisibleMode() {
 
 function getRouteMode() {
   const route = window.location.hash.replace(/^#\/?/, '');
-  return VALID_MODES.has(route) ? route : 'progress';
+  return VALID_MODES.has(route) ? route : 'cards';
 }
 
 function navigate(mode) {
@@ -417,7 +417,7 @@ async function registerServiceWorker() {
 }
 
 if (!window.location.hash || !VALID_MODES.has(window.location.hash.replace(/^#\/?/, ''))) {
-  window.location.hash = '#/progress';
+  window.location.hash = '#/cards';
 }
 
 syncVisibleMode();
